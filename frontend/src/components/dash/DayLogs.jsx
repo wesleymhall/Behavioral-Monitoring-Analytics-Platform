@@ -8,14 +8,14 @@ function DayLogs({ selectedDay, onChange, dayLogs }) {
     }, [dayLogs])
     return (
         <div className='vertical-flex'>
-            <div>{selectedDay}</div>
+            <p>{selectedDay}</p>
             <div className='daylog-list'>
             {logs?.map((log, index) => {
                 const config = metricConfig[log.metric];
                 const metricArray = config.array;
                 return (
                     <div key={index} className='vertical-flex horizontal-full'>
-                        <p>{config.emoji}: </p>
+                        <p>{config.emoji}</p>
                         <input
                             className='slider'
                             type='range'

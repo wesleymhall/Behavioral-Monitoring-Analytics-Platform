@@ -8,7 +8,7 @@ body {
     padding: 0px;
     background-color: #D8E8DB;
 }
-button, input[type='text'], input[type='password'], select, textarea {
+button, input[type='text'], input[type='password'], textarea {
     cursor: grab;
     border-radius: 6px;
     padding: 10px;
@@ -20,18 +20,31 @@ button, input[type='text'], input[type='password'], select, textarea {
     color: inherit;
     transition-duration: 100ms;
 }
+select {
+    cursor: grab;
+    box-shadow: 2px 2px 6px rgba(4, 4, 4, 0.15);
+    background-color: #FFFBFE;
+    border-radius: 6px;
+    border-color: rgba(0,0,0,0);
+    padding: 5px;
+    font-family: inherit;
+    font-size: inherit;
+    line-height: inherit;
+    outline: none;
+    margin: 5px;
+}
 input[type='text'], input[type='password'] {
     cursor: text;
     margin: 10px;
 }
-button:hover, select:hover {
+button:hover {
     background-color: #D4D4D8;
     scale: 1.01
 }
 button:disabled {
     background-color: #E4E4E7;
     cursor: default;
-    color: #E4E4E7;
+    color: #ffffff00;
 }
 button[type='plaintext'] {
     all: unset;
@@ -305,4 +318,20 @@ ul {
 .profile-container {
     width: 100%;
     height: 150px;
+}
+
+/* STATS */
+.statlabel {
+    flex: 1;
+    background-color: #e4e4e770;
+    margin: 5px;
+    border-radius: 6px;
+    padding: 5px;
+}
+.statvalue {
+    flex: 2;
+    background-color: #e4e4e770;
+    margin: 5px;
+    border-radius: 6px;
+    padding: 5px;
 }

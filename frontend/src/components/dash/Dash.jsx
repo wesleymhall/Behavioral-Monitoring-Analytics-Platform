@@ -2,8 +2,8 @@ import apiClient from '../../apiClient.js';
 import DayLogs from './DayLogs.jsx';
 import Calendar from './Calendar.jsx';
 import Logout from '../auth/Logout.jsx';
-import MetricStats from './MetricStats.jsx';
-import Trends from './Trends.jsx';
+import Stats from './Stats.jsx';
+import Patterns from './Patterns.jsx';
 import { metricConfig } from '../../Metrics.js';
 import { useState, useEffect } from 'react';
 import { format } from 'date-fns';
@@ -131,12 +131,12 @@ function Dash () {
                         {/* row B */}
                         <div className='horizontal-flex stretch-row'>
                             <div className='component-container stretch-container'>
-                                <MetricStats
+                                <Stats
                                     analytics={analytics}
                                 />
                             </div>
                             <div className='component-container stretch-container'>
-                                <Trends/>
+                                <Patterns/>
                             </div>
                         </div>
                     </div>

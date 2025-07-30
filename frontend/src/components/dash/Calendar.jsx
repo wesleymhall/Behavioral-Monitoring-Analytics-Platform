@@ -12,9 +12,9 @@ import { useState, useEffect } from 'react';
 
 function Calendar({ calendarLogs, triggerDaySelect, selectedDay }) {
     const [logs, setLogs] = useState(calendarLogs);
+    const [showMetric, setShowMetric] = useState(Object.entries(metricConfig)[0][1]);
     // set default month to current date
     const [currentMonth, setCurrentMonth] = useState(new Date());
-
     // set month bounds
     const monthStart = startOfMonth(currentMonth);
     const monthEnd = endOfMonth(currentMonth);
@@ -42,7 +42,18 @@ function Calendar({ calendarLogs, triggerDaySelect, selectedDay }) {
 
     return (
         <div className='vertical-flex'>
-            <div className='horizontal-left'>calendar</div>
+            <div className='horizontal-space-between'>
+                <p>calendar</p>
+                <select
+                    onChange={e => setShowMetric(metricConfig[e.target.value])}
+                >
+                    {Object.values(metricConfig).map((metric) => (
+                        <option key={metric.name} value={metric.name}>
+                            {metric.emoji}
+                        </option>
+                    ))}
+                </select>
+            </div>
             {/* month navigation */}
             <div className='horizontal-space-between'>
                 <button onClick={goToPreviousMonth}>&lt;</button>
@@ -54,30 +65,18 @@ function Calendar({ calendarLogs, triggerDaySelect, selectedDay }) {
                 {/* render each day */}
                 {days.map((day) => {
                     const isSelected = day === selectedDay;
+                    const dayLogs = logs[day];
+                    const metricObj = dayLogs?.find(metricObj => metricObj?.metric === showMetric.name);
+                    const metricValue = metricObj?.value;
+                    const emoteObj = showMetric.array.find(index => index.id === metricValue)
+                    const emote = emoteObj?.emote
                     return (
                         <div 
                             key={day} 
                             className={`calendar-day ${isSelected ? 'selected' : ''}`}
                             onClick={() => triggerDaySelect(day)}
                         >
-                            {/* if day has logs, render metric emote with max value */}
-                            {logs[day]?.length >= 1 ? (
-                                <div>
-                                    {
-                                        (() => {
-                                            {/* reduce iterates logs[day], callback compares log with prev to find max */}
-                                            {/* reduce(callback, index) */}
-                                            const maxLog = logs[day].reduce((max, log) =>
-                                                log.value > max.value ? log : max, logs[day][0]);
-                                            {/* access array in metricConfig, find emote that equals value */}
-                                            {/* use option chaining to safely access this emote */}
-                                            return metricConfig[maxLog.metric]?.array?.find(
-                                                emote => emote.id === maxLog.value
-                                                )?.emote || null;
-                                        })()
-                                    }
-                                </div>
-                            ) : (null)}
+                            {emote}
                         </div>
                     );
                 })}

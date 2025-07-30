@@ -27,16 +27,16 @@ def get_logs():
         metrics_logs.append({'metric': metric.name, 'logs': logs_data})
     # get analytics
     correlations = {}
-    averages = {}
+    distributions = {}
     for metric in metrics:
         correlations[metric.name] = analytics.get_correlations(user.id, metric.name)
-        averages[metric.name] = analytics.get_averages(user.id, metric.name)
+        distributions[metric.name] = analytics.get_distributions(user.id, metric.name)
     
     # return metrics logs as JSON
     return jsonify({
         'metrics_logs': metrics_logs,
         'username': username,
         'analytics' : {
-            'correlations': correlations,
+            'distributions' : distributions,
         }
     }), 200
