@@ -1,5 +1,4 @@
 from app import db
-from datetime import date
 
 # create classes that extend db.Model class from Flask-SQLAlchemy
 # db.Model registers classes in metadata object with the db instance

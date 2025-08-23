@@ -4,6 +4,7 @@ import Calendar from './Calendar.jsx';
 import Logout from '../auth/Logout.jsx';
 import Stats from './Stats.jsx';
 import Patterns from './Patterns.jsx';
+import Connects from './Connects.jsx';
 import { metricConfig } from '../../Metrics.js';
 import { useState, useEffect } from 'react';
 import { format } from 'date-fns';
@@ -136,7 +137,17 @@ function Dash () {
                                 />
                             </div>
                             <div className='component-container stretch-container'>
-                                <Patterns/>
+                                <Connects
+                                    analytics={analytics}
+                                />
+                            </div>
+                        </div>
+                        {/* row C */}
+                        <div className='horizontal-flex stretch-row'>
+                            <div className='component-container stretch-container'>
+                                <Patterns
+                                    analytics={analytics}
+                                />
                             </div>
                         </div>
                     </div>
