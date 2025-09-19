@@ -9,7 +9,7 @@ const feelings = [
     { id: 7, emote: '(๑>◡<๑)' },
     { id: 8, emote: '(๑˃́ꇴ˂̀๑)/' },
     { id: 9, emote: '(｡♥ ³♥｡)' },
-    { id: 10, emote: '(ﾉ◕ヮ◕)ﾉ･ﾟ✧' },
+    { id: 10, emote: '(ﾉ◕ヮ◕)ﾉ･✧' },
 ]
 
 const sleeps = [
@@ -44,21 +44,18 @@ const metricConfig = {
         prompt: 'how do u feel?',
         emoji: '🙂',
         array: feelings,
-        color: 'rgb(205, 135, 141)',
     },
     'sleep' : {
         name: 'sleep',
         prompt: 'how was ur sleep?',
         emoji: '💤',
         array: sleeps,
-        color: 'rgb(135, 194, 205)',
     },
     'selfcare' : {
         name: 'selfcare',
         prompt: 'selfcare, hygiene, routines?',
         emoji: '🛀',
         array: selfcares,
-        color: 'rgb(135, 205, 147)',
     },
 }
 

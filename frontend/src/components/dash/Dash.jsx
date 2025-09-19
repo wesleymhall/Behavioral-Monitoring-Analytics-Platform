@@ -4,6 +4,7 @@ import Calendar from './Calendar.jsx';
 import Logout from '../auth/Logout.jsx';
 import Stats from './Stats.jsx';
 import Patterns from './Patterns.jsx';
+import Predict from './Predict.jsx';
 import Connects from './Connects.jsx';
 import { metricConfig } from '../../Metrics.js';
 import { useState, useEffect } from 'react';
@@ -14,8 +15,11 @@ function Dash () {
     const [logs, setLogs] = useState({});
     const [analytics, setAnalytics] = useState(null);
     const [username, setUserName] = useState(null);
+    const [streak, setStreak] = useState(null);
     const [selectedDay, setSelectedDay] = useState(format(new Date(), 'yyyy-MM-dd'));
     const [dayLogs, setDayLogs] = useState([]);
+    const [showAnalytics, setShowAnalytics] = useState(false);
+    const logsLength = Object.keys(logs).length
 
     // get data on component render
     useEffect(() => {
@@ -30,6 +34,8 @@ function Dash () {
             setAnalytics(response.data.analytics);
             // get username
             setUserName(response.data.username);
+            // get streak
+            setStreak(response.data.streak);
             // map logs to dates
             const logsByDate = {};
             metricsLogs.forEach((metric) => {
@@ -96,22 +102,36 @@ function Dash () {
 
     return (
         <div className='vertical-flex'>
+            {/* navbar */}
             <div className='component-container' type='profile'>
                     <div className='vertical-flex'>
-                        <div className='horizontal-space-between'>
-                            {/* logout component */}
-                            <div>welcome {username}</div>
+                        <div className='horizontal-space-between' style={{ gap: 40 }}>
+                            <div className='horizontal-left' style={{ gap: 40 }}>
+                                <div>welcome {username}</div>
+                                <div>🔥: {streak}</div>
+                            </div>
+                            <button 
+                                onClick={() => setShowAnalytics(false)}
+                                type='plaintext'
+                            >
+                                calendar
+                            </button>
+                            <button 
+                                onClick={() => setShowAnalytics(true)}
+                                type='plaintext'
+                            >
+                                analytics
+                            </button>
                             <Logout/>
                         </div>
                     </div>
             </div>
             {/* main dash components */}
-            <div className='horizontal-flex'>
-                <div className='component-container' type='dash'>
+            <div className='component-container' type='dash'>
+                {!showAnalytics ? (
                     <div className='vertical-flex'>
                         {/* child components */}
-                        {/* row A */}
-                        <div className='horizontal-flex stretch-row'>
+                        <div className='vertical-flex stretch-row'>
                             <div className='component-container stretch-container'>
                                 <Calendar 
                                     calendarLogs={logs} 
@@ -129,10 +149,13 @@ function Dash () {
                                 />
                             </div>
                         </div>
-                        {/* row B */}
-                        <div className='horizontal-flex stretch-row'>
+                    </div>
+                ) : (
+                    <div className='vertical-flex'>
+                        {/* child components */}
+                        <div className='vertical-flex stretch-row'>
                             <div className='component-container stretch-container'>
-                                <Stats
+                                <Stats 
                                     analytics={analytics}
                                 />
                             </div>
@@ -141,17 +164,21 @@ function Dash () {
                                     analytics={analytics}
                                 />
                             </div>
-                        </div>
-                        {/* row C */}
-                        <div className='horizontal-flex stretch-row'>
                             <div className='component-container stretch-container'>
-                                <Patterns
+                                <Patterns 
                                     analytics={analytics}
+                                    logsLength={logsLength}
                                 />
                             </div>
+                            <div className='component-container stretch-container'>
+                                <Predict 
+                                    analytics={analytics}
+                                    logsLength={logsLength}
+                                />
+                            </div>                                                       
                         </div>
                     </div>
-                </div>
+                )}
             </div>
         </div>
     );

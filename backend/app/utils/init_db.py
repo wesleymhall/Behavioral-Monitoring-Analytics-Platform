@@ -1,5 +1,4 @@
 from app import create_app, db
-import app.models
 
 # use python -m to run
 # used for modules that are part of a package

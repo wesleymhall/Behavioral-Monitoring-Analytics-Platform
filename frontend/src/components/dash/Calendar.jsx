@@ -70,11 +70,15 @@ function Calendar({ calendarLogs, triggerDaySelect, selectedDay }) {
                     const metricValue = metricObj?.value;
                     const emoteObj = showMetric.array.find(index => index.id === metricValue)
                     const emote = emoteObj?.emote
+                    {/* check if future date */}
+                    const isFuture = new Date(day) > new Date();
                     return (
                         <div 
                             key={day} 
-                            className={`calendar-day ${isSelected ? 'selected' : ''}`}
-                            onClick={() => triggerDaySelect(day)}
+                            className={`calendar-day ${isSelected ? 'selected' : ''} ${isFuture ? 'future' : ''}`}
+                            onClick={() => {
+                                if (!isFuture) triggerDaySelect(day);
+                            }}
                         >
                             {emote}
                         </div>

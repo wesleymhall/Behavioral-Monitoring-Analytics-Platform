@@ -6,20 +6,31 @@ from tensorflow.keras.layers import LSTM, Dense
 from tensorflow.keras.utils import to_categorical
 from .utils import get_metric_dataframe, get_pivoted_metrics
 
-
-def get_clusters(user_id, n_clusters=10):
+# FIX FOR DATA WITH NOT ENOUGH UNIQUE VALUES
+def get_clusters(user_id):
     df = get_metric_dataframe(user_id)
     pivoted = get_pivoted_metrics(df)
-    # if table is empty or has less than 10 rows return empty dict
-    if pivoted.empty or pivoted.shape[0] < n_clusters:
+    # if table is empty or has less than 2 rows return empty dict
+    if pivoted.empty or pivoted.shape[0] < 2:
         return {}
+    # elbow method
+    inertias = []
+    krange = range(2, pivoted.shape[0])
+    for k in krange:
+        kmeans = KMeans(n_clusters=k, random_state=0)
+        kmeans.fit(pivoted)
+        inertias.append(kmeans.inertia_)
+    if len(inertias) > 1:
+        drops = np.diff(inertias)
+        n_clusters = list(krange)[np.argmin(drops) + 1]
+    else:
+        n_clusters = 2
     # get clusters
-    kmeans = KMeans(n_clusters=10, random_state=0)
+    kmeans = KMeans(n_clusters=n_clusters, random_state=0)
     kmeans.fit(pivoted)
     # get top 3 labels
     labels = kmeans.labels_
     counts = np.bincount(labels)
-    top3 = np.argsort(counts)[::-1][:3]
     # get centers
     centers = np.round(kmeans.cluster_centers_)
     # convert to df then dict
@@ -30,7 +41,7 @@ def get_clusters(user_id, n_clusters=10):
     prediction = predict_next_cluster(labels, centers_df, n_clusters)
     # orient records so each row is dict, not column
     return {
-        "clusters": centers_df.iloc[top3].to_dict(orient='records'),
+        "clusters": centers_df.to_dict(orient='records'),
         "prediction": prediction
     }
 

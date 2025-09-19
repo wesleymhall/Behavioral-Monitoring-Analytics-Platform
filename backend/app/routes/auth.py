@@ -1,6 +1,6 @@
 from app import db
 from app.models import User
-from app.utils import hash_password, verify_password
+from app.utils import hash_password, verify_password, update_streak
 from flask import Blueprint, request, jsonify, session
 
 auth_bp = Blueprint('auth', __name__)
@@ -43,6 +43,9 @@ def login():
     user = User.query.filter_by(username=username).first()
     if not user or not verify_password(user.password_hash, password):
         return jsonify({'error': 'invalid username or password'}), 400
+    # update streak
+    update_streak(user)
+    db.session.commit()
     # create session for user
     session['username'] = username
     session.modified = True 

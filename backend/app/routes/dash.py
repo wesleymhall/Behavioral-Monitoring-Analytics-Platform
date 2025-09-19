@@ -31,6 +31,7 @@ def get_logs():
         'metrics_logs': metrics_logs,
         'username': username,
         'analytics' : analytics,
+        'streak' : user.streak or 0,
     }), 200
 
 

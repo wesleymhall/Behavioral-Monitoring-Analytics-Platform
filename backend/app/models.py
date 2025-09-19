@@ -11,6 +11,9 @@ class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(80), unique=True, nullable=False)
     password_hash = db.Column(db.String(128), nullable=False)
+    # streak
+    streak = db.Column(db.Integer)
+    last_login = db.Column(db.Date, nullable=True)
 
 class Metric(db.Model):
     __tablename__ = 'metrics'
@@ -22,7 +25,6 @@ class Metric(db.Model):
     # metric can have many logs
     logs = db.relationship('Log', backref='metric', lazy=True, cascade='all, delete-orphan')
 
-#TODO: change how timestamp is stored
 class Log(db.Model):
     __tablename__ = 'logs'
     # initialise columns
