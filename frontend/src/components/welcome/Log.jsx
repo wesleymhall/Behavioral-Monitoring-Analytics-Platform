@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import apiClient from '../../apiClient.js';
 import { format } from 'date-fns';
@@ -12,6 +12,7 @@ function Log({metric, array, prompt, emoji, destination}) {
     const [hasLogsToday, setHasLogsToday] = useState(false);
     const navigate = useNavigate();
 
+    console.log(metric, array, prompt, emoji, destination);
     // check for logs today on component mount
     useEffect(() => {
         checkLogsToday();

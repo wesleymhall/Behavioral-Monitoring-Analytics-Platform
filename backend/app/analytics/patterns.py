@@ -28,7 +28,7 @@ def get_clusters(user_id):
     # get clusters
     kmeans = KMeans(n_clusters=n_clusters, random_state=0)
     kmeans.fit(pivoted)
-    # get top 3 labels
+    # get labels and label counts
     labels = kmeans.labels_
     counts = np.bincount(labels)
     # get centers

@@ -1,47 +1,24 @@
 import './App.css';
 import Auth from './components/auth/Auth.jsx';
 import Dash from './components/dash/Dash.jsx';
-import Log from './components/welcome/Log.jsx';
+import ChooseMetrics from './components/welcome/ChooseMetrics.jsx';
+import LogRoutes from './components/welcome/LogRoutes.jsx';
 import { Routes, Route, Navigate } from 'react-router-dom';
-import { metricConfig } from './Metrics.js';
-
 
 function App() {
   return (
     <>
-      {/* <img src='/images/gif.gif' className='gif-container'/> */}
       <Routes>
-        {/* default route directs to auth */}
         <Route path='/' element={<Navigate to="/welcome" />} />
         <Route path='/welcome' element={<Auth />} />
         <Route path='/dash' element={<Dash />} />
-        {/* dynamic daily log routes */}
-        {/* name is key, config is value */}
-        {Object.entries(metricConfig).map(([name, config], index, arr) => {
-          const path = `/log/${name}`;
-          const nextPath = index + 1 < arr.length
-            ? `/log/${arr[index + 1][0]}`
-            : '/dash';
-          return (
-            <Route
-              key={name}
-              path={path}
-              element={
-                <Log
-                  metric={name}
-                  array={config.array}
-                  prompt={config.prompt}
-                  emoji={config.emoji}
-                  destination={nextPath}
-                />
-              }
-            />
-          )
-        })}
+        <Route path='/choosemetrics' element={<ChooseMetrics />} />
+
+        {/* delegate /log/* routes to LogRoutes */}
+        <Route path='/log/*' element={<LogRoutes />} />
       </Routes>
     </>
   );
 }
 
-// export component as function to be available for import
 export default App;
