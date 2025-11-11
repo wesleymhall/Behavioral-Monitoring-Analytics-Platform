@@ -19,6 +19,7 @@ function Dash () {
     const [selectedDay, setSelectedDay] = useState(format(new Date(), 'yyyy-MM-dd'));
     const [dayLogs, setDayLogs] = useState([]);
     const [showAnalytics, setShowAnalytics] = useState(false);
+    const [metrics, setMetrics] = useState(null)
     const logsLength = Object.keys(logs).length
 
     // get data on component render
@@ -36,6 +37,10 @@ function Dash () {
             setUserName(response.data.username);
             // get streak
             setStreak(response.data.streak);
+            // get metrics
+            const metrics = metricsLogs.map(m => m.metric)
+            setMetrics(metrics);
+            console.log(metrics);
             // map logs to dates
             const logsByDate = {};
             metricsLogs.forEach((metric) => {
@@ -61,11 +66,14 @@ function Dash () {
 
     useEffect(() => {
         // generate default logs for empty day
-        if (!logs[selectedDay]) {
-            const defaultDay = Object.keys(metricConfig).map(metricName => ({
-                metric: metricName,
-                value: 1,
-            }));
+        if (!logs[selectedDay] && metrics && metrics.length > 0) {
+            const defaultDay = metrics.map(metricName => {
+                const config = metricConfig[metricName]
+                return ({
+                    metric: metricName,
+                    value: 1,
+                });
+            });
             setDayLogs(defaultDay);
         }
         // else assign logs to day
@@ -139,6 +147,7 @@ function Dash () {
                                         setSelectedDay(day);
                                     }}
                                     selectedDay={selectedDay}
+                                    metrics={metrics}
                                 />
                             </div>
                             <div className='component-container stretch-container'>
@@ -146,6 +155,7 @@ function Dash () {
                                     selectedDay={selectedDay}
                                     onChange={handleChange}
                                     dayLogs={dayLogs}
+                                    metrics={metrics}
                                 />
                             </div>
                         </div>
@@ -153,7 +163,7 @@ function Dash () {
                 ) : (
                     <div className='vertical-flex'>
                         {/* child components */}
-                        <div className='vertical-flex stretch-row'>
+                        {/* <div className='vertical-flex stretch-row'>
                             <div className='component-container stretch-container'>
                                 <Stats 
                                     analytics={analytics}
@@ -176,7 +186,7 @@ function Dash () {
                                     logsLength={logsLength}
                                 />
                             </div>                                                       
-                        </div>
+                        </div> */}
                     </div>
                 )}
             </div>

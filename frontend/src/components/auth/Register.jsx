@@ -6,9 +6,7 @@ function Register({ toggleRegister }) {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
 
-    // form submit event is passed to async function
     const handleSubmit = async (e) => {
-        // prevent default response to reload page
         e.preventDefault();
         try {
             const response = await apiClient.post('/auth/register', {
@@ -16,8 +14,8 @@ function Register({ toggleRegister }) {
                 password,
             });
             toggleRegister();
-        } catch (error) { // if error occurs, set message to error response data
-            alert(error.response.data.error);
+        } catch (error) {
+            console.error('register error:', error);
         }
     };
     

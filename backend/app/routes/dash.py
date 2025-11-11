@@ -26,11 +26,11 @@ def get_logs():
         logs_data = [{'id': log.id, 'value': log.value, 'timestamp': log.timestamp} for log in logs]
         metrics_logs.append({'metric': metric.name, 'logs': logs_data})
     # get analytics
-    analytics = get_analytics(user, metrics)
+    #analytics = get_analytics(user, metrics)
     return jsonify({
         'metrics_logs': metrics_logs,
         'username': username,
-        'analytics' : analytics,
+        #'analytics' : analytics,
         'streak' : user.streak or 0,
     }), 200
 

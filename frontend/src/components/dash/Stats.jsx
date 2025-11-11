@@ -2,17 +2,22 @@ import { metricConfig } from '../../Metrics.js';
 import { useState, useEffect } from 'react';
 
 
-function Stats({ analytics }) {
+function Stats({ analytics, metrics }) {
     const [currentIndex, setCurrentIndex] = useState(0);
     const [showStats, setShowStats] = useState(false)
     const [currStats, setCurrStats] = useState({});
     const [mode, setMode] = useState('value');
     const [span, setSpan] = useState('week');
 
-    const currentMetric = Object.keys(metricConfig)[currentIndex];
+    const currentMetric = () => {
+        if (metrics && metrics.length > 0) {
+            return metrics[currentIndex];
+        }
+        return null;
+    };
 
     const hasPrev = currentIndex > 0;
-    const hasNext = currentIndex < Object.keys(metricConfig).length - 1;
+    const hasNext = currentIndex < metrics.length - 1;
 
     const goToPrevMetric = () => {
         if (hasPrev) {
@@ -25,12 +30,13 @@ function Stats({ analytics }) {
         };
     };
 
+    const metric = currentMetric();
+    const metricInfo = metricConfig[metric]
+
     useEffect(() => {
-        const getCurrStats = () => {
-            const stats = analytics?.['stats'][`${metricConfig[currentMetric].name}`][span];
-            setCurrStats(stats);
-        }
-        getCurrStats();
+        if (!metric) return;
+        const stats = analytics?.stats?.[metricInfo?.name]?.[span] ?? {};
+        setCurrStats(stats);
     }, [currentIndex, analytics, span]);
 
     return (
@@ -70,7 +76,12 @@ function Stats({ analytics }) {
                     {/* navigation */}
                     <div className='horizontal-space-between'>
                         <button onClick={goToPrevMetric} disabled={!hasPrev}>&lt;</button>
-                        <p>{metricConfig[currentMetric].emoji}: {metricConfig[currentMetric].name}</p>
+                        <p>
+                            {metric
+                            ? `${metricInfo.emoji}: ${metricInfo.name}`
+                            : 'No Metric'
+                            }
+                        </p>
                         <button onClick={goToNextMetric} disabled={!hasNext}>&gt;</button>
                     </div>
                     {/* stats */}

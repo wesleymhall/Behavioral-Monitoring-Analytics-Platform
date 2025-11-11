@@ -3,12 +3,10 @@ import { useNavigate } from 'react-router-dom';
 
 
 function Logout() {
-    // call useNavigate hook to get navigate function
     const navigate = useNavigate();
 
     const handleLogout = async () => {
         const response = await apiClient.post('/auth/logout');
-        // navigate to default route
         navigate('/');
     };
 

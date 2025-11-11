@@ -10,7 +10,7 @@ import {
 import { useState, useEffect } from 'react';
 
 
-function Calendar({ calendarLogs, triggerDaySelect, selectedDay }) {
+function Calendar({ calendarLogs, triggerDaySelect, selectedDay, metrics }) {
     const [logs, setLogs] = useState(calendarLogs);
     const [showMetric, setShowMetric] = useState(Object.entries(metricConfig)[0][1]);
     // set default month to current date
@@ -47,11 +47,16 @@ function Calendar({ calendarLogs, triggerDaySelect, selectedDay }) {
                 <select
                     onChange={e => setShowMetric(metricConfig[e.target.value])}
                 >
-                    {Object.values(metricConfig).map((metric) => (
-                        <option key={metric.name} value={metric.name}>
-                            {metric.emoji}
-                        </option>
-                    ))}
+                    {metrics && metrics.length > 0 &&
+                        metrics.map((metricName) => {
+                            const config = metricConfig[metricName];
+                            return (
+                                <option key={metricName} value={metricName}>
+                                    {config.emoji}
+                                </option>
+                            );
+                        })
+                    };
                 </select>
             </div>
             {/* month navigation */}
@@ -68,7 +73,7 @@ function Calendar({ calendarLogs, triggerDaySelect, selectedDay }) {
                     const dayLogs = logs[day];
                     const metricObj = dayLogs?.find(metricObj => metricObj?.metric === showMetric.name);
                     const metricValue = metricObj?.value;
-                    const emoteObj = showMetric.array.find(index => index.id === metricValue)
+                    const emoteObj = showMetric.array.find(index => index.idx === metricValue)
                     const emote = emoteObj?.emote
                     {/* check if future date */}
                     const isFuture = new Date(day) > new Date();
