@@ -1,1 +1,1 @@
-# wellness-app
+# mental-health-app
