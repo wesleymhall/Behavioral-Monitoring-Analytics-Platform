@@ -5,7 +5,6 @@ from flask import Blueprint, request, jsonify, session
 
 auth_bp = Blueprint('auth', __name__)
 
-
 @auth_bp.route('/register', methods=['POST'])
 def register():
     # TODO: restrict username and password length
@@ -27,7 +26,6 @@ def register():
     db.session.add(new_user)
     db.session.commit()
     return jsonify({'message': 'user registered successfully'}), 201
-
 
 @auth_bp.route('/login', methods=['POST'])
 def login():
@@ -52,14 +50,12 @@ def login():
     print('Session after login:', session)
     return jsonify({'message': 'user logged in successfully'}), 200
 
-
 @auth_bp.route('/logout', methods=['POST'])
 def logout():
     # remove user session
     session.pop('username', None)  
     return jsonify({'message': 'user logged out successfully'}), 200
 
- 
 @auth_bp.route('/session', methods=['GET'])
 def check_session():
     # session.pop('username', None)

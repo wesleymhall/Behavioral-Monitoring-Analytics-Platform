@@ -77,7 +77,6 @@ def create_metric():
 
     return jsonify({'message': 'metric created successfully'}), 200
 
-
 @log_bp.route('/deletelog', methods=['DELETE'])
 def delete_log():
     # check if user is logged in

@@ -9,81 +9,76 @@ import {
 } from 'date-fns';
 import { useState, useEffect } from 'react';
 
-
+/**
+ * Calendar component renders a monthly view of metrics logs
+ */
 function Calendar({ calendarLogs, triggerDaySelect, selectedDay, metrics }) {
-    const [logs, setLogs] = useState(calendarLogs);
-    const [showMetric, setShowMetric] = useState(Object.entries(metricConfig)[0][1]);
-    // set default month to current date
     const [currentMonth, setCurrentMonth] = useState(new Date());
-    // set month bounds
+    const [activeMetricName, setActiveMetricName] = useState(metrics?.[0] || null);
+
     const monthStart = startOfMonth(currentMonth);
     const monthEnd = endOfMonth(currentMonth);
 
-    // navigate between months
-    const goToNextMonth = () => {
-        // pass prev month, add 1
-        setCurrentMonth((prev) => addMonths(prev, 1));
-    };
-    const goToPreviousMonth = () => {
-        // pass prev month, subtract 1
-        setCurrentMonth((prev) => subMonths(prev, 1));
-    };
+    const days = eachDayOfInterval({ start: monthStart, end: monthEnd })
+        .map(day => format(day, 'yyyy-MM-dd'));
 
-    // array of date objects within bounds
-    const days = eachDayOfInterval({
-        start: monthStart,
-        end: monthEnd,
-    }).map(day => format(day, 'yyyy-MM-dd'));
-
-    // updated logs upon prop change
+    // Update activeMetricName if metrics change
     useEffect(() => {
-        setLogs(calendarLogs);
-    }, [calendarLogs]);
+        if (!activeMetricName && metrics?.length > 0) {
+            setActiveMetricName(metrics[0]);
+        }
+    }, [metrics, activeMetricName]);
+
+    const goToNextMonth = () => setCurrentMonth(prev => addMonths(prev, 1));
+    const goToPreviousMonth = () => setCurrentMonth(prev => subMonths(prev, 1));
 
     return (
         <div className='vertical-flex'>
+            {/* Metric selector */}
             <div className='horizontal-space-between'>
                 <p>calendar</p>
                 <select
-                    onChange={e => setShowMetric(metricConfig[e.target.value])}
+                    value={activeMetricName || ''}
+                    onChange={e => setActiveMetricName(e.target.value)}
                 >
-                    {metrics && metrics.length > 0 &&
-                        metrics.map((metricName) => {
-                            const config = metricConfig[metricName];
-                            return (
-                                <option key={metricName} value={metricName}>
-                                    {config.emoji}
-                                </option>
-                            );
-                        })
-                    };
+                    {metrics?.map(name => {
+                        const config = metricConfig[name];
+                        return (
+                            <option key={name} value={name}>
+                                {config.emoji}
+                            </option>
+                        );
+                    })}
                 </select>
             </div>
-            {/* month navigation */}
+
+            {/* Month navigation */}
             <div className='horizontal-space-between'>
                 <button onClick={goToPreviousMonth}>&lt;</button>
                 <p>{format(currentMonth, 'MMMM yyyy').toLowerCase()}</p>
                 <button onClick={goToNextMonth}>&gt;</button>
             </div>
-            {/* days grid */}
+
+            {/* Days grid */}
             <div className='calendar-grid'>
-                {/* render each day */}
-                {days.map((day) => {
+                {days.map(day => {
                     const isSelected = day === selectedDay;
-                    const dayLogs = logs[day];
-                    const metricObj = dayLogs?.find(metricObj => metricObj?.metric === showMetric.name);
-                    const metricValue = metricObj?.value;
-                    const emoteObj = showMetric.array.find(index => index.idx === metricValue)
-                    const emote = emoteObj?.emote
-                    {/* check if future date */}
+                    const dayLogs = calendarLogs[day] || [];
+                    const activeMetric = metricConfig[activeMetricName];
+                    
+                    // Only show emote if a log exists for this day for the active metric
+                    const metricObj = dayLogs.find(log => log.metric === activeMetricName);
+                    const emote = metricObj
+                        ? activeMetric.array.find(item => item.idx === metricObj.value)?.emote
+                        : null;
+
                     const isFuture = new Date(day) > new Date();
+
                     return (
-                        <div 
-                            key={day} 
+                        <div
+                            key={day}
                             className={`calendar-day ${isSelected ? 'selected' : ''} ${isFuture ? 'future' : ''}`}
-                            onClick={() => {
-                                if (!isFuture) triggerDaySelect(day);
-                            }}
+                            onClick={() => { if (!isFuture) triggerDaySelect(day); }}
                         >
                             {emote}
                         </div>

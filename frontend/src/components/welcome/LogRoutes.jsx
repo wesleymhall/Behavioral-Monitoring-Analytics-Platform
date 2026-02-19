@@ -5,84 +5,75 @@ import { metricConfig } from '../../Metrics.js';
 import apiClient from '../../apiClient.js';
 import Log from './Log.jsx';
 
-
+/**
+ * LogRoutes dynamically generates routes for logging each metric
+ */
 function LogRoutes() {
-  const [selectedMetrics, setSelectedMetrics] = useState([]);
-  const [hasLogsToday, setHasLogsToday] = useState(false);
-  const navigate = useNavigate();
+    const [selectedMetrics, setSelectedMetrics] = useState([]);
+    const [hasLogsToday, setHasLogsToday] = useState(false);
+    const navigate = useNavigate();
 
-  useEffect(() => {
-    const fetchMetrics = async () => {
-      // do not fetch metrics after selected metrics are defined
-      // this prevents premature navigate to dash
-      if (selectedMetrics.length > 0) return;
-      try {
-        const response = await apiClient.get('/dash/getlogs');
-        const metricsLogs = response.data.metrics_logs || [];
-        const metrics = metricsLogs.map(m => m.metric);
-        const today = format(new Date(), 'yyyy-MM-dd'); 
-        setSelectedMetrics(metrics);
+    useEffect(() => {
+        if (selectedMetrics.length > 0) return;
+        const fetchMetrics = async () => {
+            try {
+                const response = await apiClient.get('/dash/getlogs');
+                const logs = response.data.logs || [];
+                const metrics = logs.map(m => m.metric);
+                const today = format(new Date(), 'yyyy-MM-dd');
 
-        if (metrics.length === 0) {
-          navigate('/selectmetrics');
-        }
+                setSelectedMetrics(metrics);
+                if (metrics.length === 0) {
+                    navigate('/selectmetrics');
+                };
 
-        const hasLogs = metricsLogs.some((metric) =>
-            metric.logs.some((log) => {
-              // convert log timestamp to date string without time
-              const logDate = new Date(log.timestamp).toISOString().split('T')[0];
-              return logDate === today;
-            })
-        );
-        setHasLogsToday(hasLogs);
-      } catch (error) {
-        console.error('error fetching metrics:', error);
-        navigate('/selectmetrics');
-      }
-    };
+                const hasLogs = logs.some(metric =>
+                    metric.logs.some(log => new Date(log.timestamp).toISOString().split('T')[0] === today)
+                );
 
-    fetchMetrics();
-  }, [navigate]);
-
-  useEffect(() => {
-    // if user has logged today, redirect to dash
-    if (hasLogsToday) {
-        navigate('/dash');
-    }
-  }, [navigate, hasLogsToday])
-
-  return (
-    <Routes>
-      {/* map all log routes */}
-      {selectedMetrics.map((name, index) => {
-        const config = metricConfig[name];
-        if (!config) return null;
-
-        // define destinations for log components
-        // final destination is dash
-        const nextPath =
-          index + 1 < selectedMetrics.length
-            ? `/log/${selectedMetrics[index + 1]}`
-            : '/dash';
-
-        return (
-          <Route
-            key={name}
-            path={name}
-            element={
-              <Log
-                metric={name}
-                array={config.array}
-                prompt={config.prompt}
-                emoji={config.emoji}
-                destination={nextPath}
-              />
+                setHasLogsToday(hasLogs);
+            } catch (error) {
+                console.error('error fetching metrics:', error);
+                navigate('/selectmetrics');
             }
-          />
-        );
-      })}
-    </Routes>
-  );
+        };
+
+        fetchMetrics();
+    }, [navigate, selectedMetrics]);
+
+    // redirect if user has already logged today
+    useEffect(() => {
+        if (hasLogsToday) navigate('/dash');
+    }, [hasLogsToday, navigate]);
+
+    return (
+        <Routes>
+            {selectedMetrics.map((name, index) => {
+                const config = metricConfig[name];
+                if (!config) return null;
+
+                const nextPath = index + 1 < selectedMetrics.length
+                    ? `/log/${selectedMetrics[index + 1]}`
+                    : '/dash';
+
+                return (
+                    <Route
+                        key={name}
+                        path={name}
+                        element={
+                            <Log
+                                metric={name}
+                                array={config.array}
+                                prompt={config.prompt}
+                                emoji={config.emoji}
+                                destination={nextPath}
+                            />
+                        }
+                    />
+                );
+            })}
+        </Routes>
+    );
 }
 
 export default LogRoutes;

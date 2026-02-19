@@ -1,78 +1,65 @@
 import { metricConfig } from '../../Metrics.js';
 import { useState, useEffect } from 'react';
 
-
+/**
+ * Connects component displays metric correlations with selectable lag
+ */
 function Connects({ analytics }) {
     const [lag, setLag] = useState('0');
-    const [connects, setCurrConnects] = useState({});
-    const [showConnects, setShowConnects] = useState(false);
+    const [connectsData, setConnectsData] = useState({});
+    const [isExpanded, setIsExpanded] = useState(false);
 
+    // Update connects data from analytics
     useEffect(() => {
-        const getCurrConnects = () => {
-            const connects = analytics?.['connects'];
-            setCurrConnects(connects);
-        }
-        getCurrConnects();
-    }, [ analytics ]);
+        setConnectsData(analytics?.connects || {});
+    }, [analytics]);
 
     return (
         <div className='vertical-flex'>
-            <button
-                onClick={() => setShowConnects(!showConnects)}
-                type='plaintext'
-                className='horizontal-full'
-            >
+            {/* Toggle button */}
+            <button onClick={() => setIsExpanded(!isExpanded)} type='plaintext' className='horizontal-full'>
                 <div>connects</div>
-                <div>{showConnects ? '▲' : '▼'}</div>
+                <div>{isExpanded ? '▲' : '▼'}</div>
             </button>
-            {!showConnects ? (
-                <div></div>
-            ) : (
+
+            {isExpanded && (
                 <>
+                    {/* Lag selector */}
                     <div className='horizontal-right'>
                         <div>
                             <label>lag: </label>
-                            <select
-                                value={lag}
-                                onChange={e => setLag(e.target.value)}
-                            >
-                                <option value='0'>0</option>
-                                <option value='1'>1</option>
-                                <option value='2'>2</option>
-                                <option value='3'>3</option>
+                            <select value={lag} onChange={e => setLag(e.target.value)}>
+                                {[0, 1, 2, 3].map(n => <option key={n} value={n}>{n}</option>)}
                             </select>
                         </div>
                     </div>
-                    {/* render if connects, children of connect, and children of connect children has rendered */}
-                    {connects && 
-                        Object.values(connects).length > 0 && 
-                        Object.values(Object.values(connects)[0]).length > 0 ? 
-                        (
-                            <div className='connects-table'>
-                                {/* header row with metric emojis */}
+
+                    {/* Table of connects */}
+                    {Object.keys(connectsData).length > 0 &&
+                        Object.values(connectsData)[0] &&
+                        Object.values(Object.values(connectsData)[0]).length > 0 && (
+                            <div className='table'>
                                 <div className='horizontal-flex'>
                                     <div className='table-label'></div>
-                                    {Object.values(metricConfig).map(val => 
-                                        <div className='table-value' key={val.name}>{val.emoji}</div>
-                                    )}
+                                    {Object.values(metricConfig).map(metric => (
+                                        <div className='table-value' key={metric.name}>{metric.emoji}</div>
+                                    ))}
                                 </div>
-                                {/* correlation rows */}
-                                {Object.values(metricConfig).map(val => 
-                                    <div className='horizontal-left' key={val.name}>
-                                        <div className='table-label'>{val.emoji}: {val.name}</div>
-                                        {connects && Object.values(metricConfig).map(corrVal => {
-                                            const corr = connects?.[val.name]?.[Number(lag)]?.[corrVal.name];
+                                {Object.values(metricConfig).map(metric => (
+                                    <div className='horizontal-left' key={metric.name}>
+                                        <div className='table-label'>{metric.emoji}: {metric.name}</div>
+                                        {Object.values(metricConfig).map(corrMetric => {
+                                            const corr = connectsData?.[metric.name]?.[Number(lag)]?.[corrMetric.name];
                                             return (
-                                                <div className='table-value' key={corrVal.name}>
-                                                    {corr != null ? (Math.round(corr * 10) / 10) : '-'}
+                                                <div className='table-value' key={corrMetric.name}>
+                                                    {corr != null ? Math.round(corr * 10) / 10 : '-'}
                                                 </div>
                                             );
                                         })}
                                     </div>
-                                )}
+                                ))}
                             </div>
-                        ) : null
-                    }
+                        )}
                 </>
             )}
         </div>

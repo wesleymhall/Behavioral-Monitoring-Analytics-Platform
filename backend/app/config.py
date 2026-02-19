@@ -13,7 +13,6 @@ class Config:
     # prevents clients from tampering with the cookie
     SECRET_KEY = os.getenv('SECRET_KEY')
 
-    
     # get database URL
     SQLALCHEMY_DATABASE_URI = os.getenv('DATABASE_URL')
     # do not track modifications to save performance

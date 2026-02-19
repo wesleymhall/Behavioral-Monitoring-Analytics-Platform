@@ -31,7 +31,7 @@ def get_stats(user_id, metric):
         'spread': lambda s: (s - s.mean()).abs().mean(),
         'common': lambda s: s.mode().iloc[0],
         'mix': lambda s: entropy(s.value_counts()/len(s)) if len(s) > 0 else None,
-        'trend': lambda s: np.polyfit(s.index.map(pd.Timestamp.toordinal), s, 1)[0]
+        'trend': lambda s: np.polyfit(s.index.map(pd.Timestamp.toordinal), s, 1)[0] if len(set(s)) > 1 else None,
     }
     # package stats
     stats = {}   

@@ -10,7 +10,6 @@ cors = CORS()
 db = SQLAlchemy()
 session = Session()
 
-
 def create_app():
     app = Flask(__name__)
 

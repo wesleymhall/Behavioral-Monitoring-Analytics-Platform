@@ -1,9 +1,5 @@
 from app import create_app, db
 
-# use python -m to run
-# used for modules that are part of a package
-# helps python import from the correct directory
-
 app = create_app()
 
 # activate the app context to access the database

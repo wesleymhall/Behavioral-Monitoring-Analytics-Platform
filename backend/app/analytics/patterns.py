@@ -1,18 +1,25 @@
 import pandas as pd
 import numpy as np
 from sklearn.cluster import KMeans
-from tensorflow.keras.models import Sequential
-from tensorflow.keras.layers import LSTM, Dense
-from tensorflow.keras.utils import to_categorical
+from keras.models import Sequential
+from keras.layers import LSTM, Dense
+from keras.utils import to_categorical
 from .utils import get_metric_dataframe, get_pivoted_metrics
 
 # FIX FOR DATA WITH NOT ENOUGH UNIQUE VALUES
 def get_clusters(user_id):
     df = get_metric_dataframe(user_id)
     pivoted = get_pivoted_metrics(df)
-    # if table is empty or has less than 2 rows return empty dict
+    # if table is empty
     if pivoted.empty or pivoted.shape[0] < 2:
-        return {}
+        return {
+            'message': 'not enough values'
+        }
+    # if table has < 2 rows
+    if len(pivoted.drop_duplicates()) < 2:
+        return {
+            'message': 'not enough unique values'
+        }
     # elbow method
     inertias = []
     krange = range(2, pivoted.shape[0])
@@ -44,7 +51,6 @@ def get_clusters(user_id):
         "clusters": centers_df.to_dict(orient='records'),
         "prediction": prediction
     }
-
 
 def predict_next_cluster(labels, centers_df, n_clusters, epochs=20, seqlen=30):
     # return empty dict for data <= seqlen

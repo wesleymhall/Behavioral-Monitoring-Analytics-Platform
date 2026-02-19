@@ -3,64 +3,87 @@ import { useNavigate } from 'react-router-dom';
 import { metricConfig } from '../../Metrics.js';
 import apiClient from '../../apiClient.js';
 
-
+/**
+ * allows user to select metrics upon register
+ */
 function SelectMetrics() {
-  const [selectedIndex, setSelectedIndex] = useState([]);
-  const [selectedMetrics, setSelectedMetrics] = useState([]);
-  const navigate = useNavigate();
+    const [selectedMetrics, setSelectedMetrics] = useState([]);
+    const [unselectedMetrics, setUnselectedMetrics] = useState(Object.keys(metricConfig));
+    const navigate = useNavigate();
 
-  useEffect(() => {
-      if (selectedMetrics.length >= 5) {
-        handleSubmit();
-      };
-  }, [selectedMetrics]);
+    useEffect(() => {
+        setUnselectedMetrics(Object.keys(metricConfig).filter(name => !selectedMetrics.includes(name)));
+    }, [selectedMetrics]);
 
-  const toggleMetric = (name) => {
-    // prev is the arr prev state
-    // if name exists in prev 
-    // allow m !== name to pass filter to new arr
-    // else append name to end
-    setSelectedMetrics(prev =>
-      prev.includes(name) ? prev.filter(m => m !== name) : [...prev, name]
+    const toggleMetric = (name) => {
+        setSelectedMetrics(prev =>
+            prev.includes(name) ? prev.filter(m => m !== name) : [...prev, name]
+        );
+    };
+
+    const handleSubmit = async () => {
+        try {
+            if (selectedMetrics.length === 0) {
+                console.error('no metrics selected');
+                return;
+            }
+            for (const metric of selectedMetrics) {
+                await apiClient.post('/log/createmetric', { name: metric });
+            }
+            const firstMetric = selectedMetrics[0];
+            console.log('navigating to:', `/log/${firstMetric}`);
+            navigate(`/log/${firstMetric}`);
+        } catch (error) {
+            console.error('selection error:', error);
+        }
+    };
+
+    return (
+        <div className='centered'>
+            <div className='component-container' type='panels'>
+                <div className='horizontal-flex'>
+                    <div className='vertical-flex'>
+                        <p>select metrics:</p>
+                        <div className='flex-container' type='vertical'>
+                            {/* unselected metrics */}
+                            <div className='component-container' type='selectbox'>
+                                <div className='horizontal-left'>
+                                    {unselectedMetrics.map(name => (
+                                        <button key={name} onClick={() => toggleMetric(name)} type='plaintext'>
+                                            <div>{name}</div>
+                                        </button>
+                                    ))}
+                                </div>
+                            </div>
+
+                            <div style={{ fontSize: '40px' }}>↓</div>
+
+                            {/* selected metrics */}
+                            <div className='component-container' type='selectedbox'>
+                                <div className='vertical-flex' type='centered'>
+                                    <div className='horizontal-flex'>
+                                        {[0, 1, 2, 3, 4].map(i => (
+                                            <div key={i} className='component-container' type='selectedmetric'>
+                                                {selectedMetrics[i] && (
+                                                    <button onClick={() => toggleMetric(selectedMetrics[i])} type='plaintext'>
+                                                        <div style={{ fontSize: '25px' }}>
+                                                            {metricConfig[selectedMetrics[i]].emoji}
+                                                        </div>
+                                                    </button>
+                                                )}
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <button onClick={handleSubmit} type='wide'>submit</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     );
-  };
-
-  const handleSubmit = async () => {
-    // submit all selected metrics
-    try {
-      for (const metric of selectedMetrics) {
-        await apiClient.post('/log/createmetric', { name: metric });
-      }
-      navigate(`/log/${selectedMetrics[0]}`);
-    } catch (error) {
-      console.error('selection error:', error);
-    }
-  };
-
-  return (
-    <div className='centered'>
-    <div className='component-container' type='cards'>
-    <div className='horizontal-flex'>
-    <div className='vertical-flex'>
-      <div>select metrics: </div>
-      <div className='horizontal-flex'>
-      {/* map all metrics in config */}
-      {Object.entries(metricConfig).map(([name, config]) => (
-          <button
-          key={name}
-          onClick={() => toggleMetric(name)}
-          >
-            <div className='centered'>{name}</div>
-            <div className='centered-bottom'>{config.emoji}</div>
-          </button>
-      ))}
-      </div>
-      <button onClick={() => toggleMetric(name)}>select</button>
-    </div>
-    </div>
-    </div>
-    </div>
-  );
 }
 
 export default SelectMetrics;
