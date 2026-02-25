@@ -1,1 +1,1 @@
-# mental-health-app
+# mental-health-ML-app
