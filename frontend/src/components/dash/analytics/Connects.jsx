@@ -1,5 +1,7 @@
-import { metricConfig } from '../../Metrics.js';
+import { metricConfig } from '../../../Metrics.js';
 import { useState, useEffect } from 'react';
+import InfoDisplay from './info/InfoDisplay.jsx';
+import { infoContent } from './info/infoContent.js';
 
 /**
  * Connects component displays metric correlations with selectable lag
@@ -9,7 +11,7 @@ function Connects({ analytics }) {
     const [connectsData, setConnectsData] = useState({});
     const [isExpanded, setIsExpanded] = useState(false);
 
-    // Update connects data from analytics
+    // update connects data from analytics
     useEffect(() => {
         setConnectsData(analytics?.connects || {});
     }, [analytics]);
@@ -24,17 +26,20 @@ function Connects({ analytics }) {
 
             {isExpanded && (
                 <>
-                    {/* Lag selector */}
-                    <div className='horizontal-right'>
-                        <div>
-                            <label>lag: </label>
-                            <select value={lag} onChange={e => setLag(e.target.value)}>
-                                {[0, 1, 2, 3].map(n => <option key={n} value={n}>{n}</option>)}
-                            </select>
+                    {/* lag selector and info element */}          
+                    <div className='horizontal-space-between'>
+                        <InfoDisplay content={infoContent.connects}/>
+                        <div className='horizontal-right'>
+                            <div>
+                                <label>lag: </label>
+                                <select value={lag} onChange={e => setLag(e.target.value)}>
+                                    {[0, 1, 2, 3].map(n => <option key={n} value={n}>{n}</option>)}
+                                </select>
+                            </div>
                         </div>
                     </div>
 
-                    {/* Table of connects */}
+                    {/* correlation matrix table */}
                     {Object.keys(connectsData).length > 0 &&
                         Object.values(connectsData)[0] &&
                         Object.values(Object.values(connectsData)[0]).length > 0 && (

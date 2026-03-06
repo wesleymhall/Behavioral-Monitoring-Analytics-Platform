@@ -1,4 +1,4 @@
-import { metricConfig } from '../../Metrics.js';
+import { metricConfig } from '../../../Metrics.js';
 import { useState, useEffect } from 'react';
 
 /**

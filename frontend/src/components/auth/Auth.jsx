@@ -5,7 +5,7 @@ import Login from './Login.jsx';
 import Register from './Register.jsx';
 
 /**
- * Main auth component handling login/register switch
+ * Auth component handling login/register switch
  */
 function Auth() {
     const [isRegistering, setIsRegistering] = useState(false);

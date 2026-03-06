@@ -1,5 +1,7 @@
-import { metricConfig } from '../../Metrics.js';
+import { metricConfig } from '../../../Metrics.js';
 import { useState, useEffect } from 'react';
+import InfoDisplay from './info/InfoDisplay.jsx';
+import { infoContent } from './info/infoContent.js';
 
 /**
  * Stats component displays analytics statistics for metrics
@@ -36,19 +38,22 @@ function Stats({ analytics, metrics }) {
 
             {isExpanded && (
                 <>
-                    {/* mode and span selector */}
-                    <div className='horizontal-right'>
-                        <div>
-                            <select value={mode} onChange={e => setMode(e.target.value)}>
-                                <option value='value'>this</option>
-                                <option value='prev'>last</option>
-                                <option value='change'>change</option>
-                            </select>
-                            <select value={span} onChange={e => setSpan(e.target.value)}>
-                                <option value='week'>week</option>
-                                <option value='month'>month</option>
-                                <option value='year'>year</option>
-                            </select>
+                    {/* mode / span selector and info element */}
+                    <div className='horizontal-space-between'>
+                        <InfoDisplay content={infoContent.stats}/>
+                        <div className='horizontal-right'>
+                            <div>
+                                <select value={mode} onChange={e => setMode(e.target.value)}>
+                                    <option value='value'>this</option>
+                                    <option value='prev'>last</option>
+                                    <option value='change'>change</option>
+                                </select>
+                                <select value={span} onChange={e => setSpan(e.target.value)}>
+                                    <option value='week'>week</option>
+                                    <option value='month'>month</option>
+                                    <option value='year'>year</option>
+                                </select>
+                            </div>
                         </div>
                     </div>
 

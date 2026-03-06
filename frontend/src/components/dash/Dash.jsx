@@ -3,14 +3,14 @@ import apiClient from '../../apiClient.js';
 import { format } from 'date-fns';
 import Calendar from './Calendar.jsx';
 import DayLogs from './DayLogs.jsx';
-import Patterns from './Patterns.jsx';
-import Predict from './Predict.jsx';
-import Connects from './Connects.jsx';
-import Stats from './Stats.jsx';
+import Patterns from './analytics/Patterns.jsx';
+import Predict from './analytics/Predict.jsx';
+import Connects from './analytics/Connects.jsx';
+import Stats from './analytics/Stats.jsx';
 import Logout from '../auth/Logout.jsx';
 
 /**
- * Dashboard component
+ * Dash component
  * renders calendar, day logs, and analytics controls
  */
 function Dash() {

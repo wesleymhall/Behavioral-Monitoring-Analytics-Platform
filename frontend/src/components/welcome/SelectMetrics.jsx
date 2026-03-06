@@ -4,7 +4,7 @@ import { metricConfig } from '../../Metrics.js';
 import apiClient from '../../apiClient.js';
 
 /**
- * allows user to select metrics upon register
+ * SelectMetrics allows user to select metrics upon register
  */
 function SelectMetrics() {
     const [selectedMetrics, setSelectedMetrics] = useState([]);

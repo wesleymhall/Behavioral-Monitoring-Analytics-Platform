@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Routes, Route, useNavigate } from 'react-router-dom';
+import { Routes, Route, useNavigate, Navigate } from 'react-router-dom';
 import { format } from 'date-fns';
 import { metricConfig } from '../../Metrics.js';
 import apiClient from '../../apiClient.js';
@@ -48,6 +48,12 @@ function LogRoutes() {
 
     return (
         <Routes>
+            {selectedMetrics.length > 0 && (
+                <Route
+                    index
+                    element={<Navigate to={selectedMetrics[0]}/>}
+                />
+            )}
             {selectedMetrics.map((name, index) => {
                 const config = metricConfig[name];
                 if (!config) return null;

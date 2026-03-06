@@ -22,7 +22,7 @@ function Calendar({ calendarLogs, triggerDaySelect, selectedDay, metrics }) {
     const days = eachDayOfInterval({ start: monthStart, end: monthEnd })
         .map(day => format(day, 'yyyy-MM-dd'));
 
-    // Update activeMetricName if metrics change
+    // update activeMetricName if metrics change
     useEffect(() => {
         if (!activeMetricName && metrics?.length > 0) {
             setActiveMetricName(metrics[0]);
@@ -34,7 +34,7 @@ function Calendar({ calendarLogs, triggerDaySelect, selectedDay, metrics }) {
 
     return (
         <div className='vertical-flex'>
-            {/* Metric selector */}
+            {/* metric selector */}
             <div className='horizontal-space-between'>
                 <p>calendar</p>
                 <select
@@ -52,21 +52,21 @@ function Calendar({ calendarLogs, triggerDaySelect, selectedDay, metrics }) {
                 </select>
             </div>
 
-            {/* Month navigation */}
+            {/* month navigation */}
             <div className='horizontal-space-between'>
                 <button onClick={goToPreviousMonth}>&lt;</button>
                 <p>{format(currentMonth, 'MMMM yyyy').toLowerCase()}</p>
                 <button onClick={goToNextMonth}>&gt;</button>
             </div>
 
-            {/* Days grid */}
+            {/* days grid */}
             <div className='calendar-grid'>
                 {days.map(day => {
                     const isSelected = day === selectedDay;
                     const dayLogs = calendarLogs[day] || [];
                     const activeMetric = metricConfig[activeMetricName];
                     
-                    // Only show emote if a log exists for this day for the active metric
+                    // only show emote if a log exists for this day for the active metric
                     const metricObj = dayLogs.find(log => log.metric === activeMetricName);
                     const emote = metricObj
                         ? activeMetric.array.find(item => item.idx === metricObj.value)?.emote
