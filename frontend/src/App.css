@@ -73,7 +73,7 @@ button[type='plaintext'] {
 }
 
 button[type='plaintext']:hover {
-  scale: 1.05;
+  scale: 1.1;
 }
 
 button[type='plaintext'].horizontal-full {
