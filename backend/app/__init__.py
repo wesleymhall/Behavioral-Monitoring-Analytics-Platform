@@ -32,5 +32,10 @@ def create_app():
     app.register_blueprint(dash_bp, url_prefix='/dash')
     app.register_blueprint(log_bp, url_prefix='/log')
 
+    # create tables
+    from . import models
+    with app.app_context():
+        db.create_all()
+
     # return app instance
     return app
