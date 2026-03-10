@@ -1,7 +1,7 @@
 import { metricConfig } from '../../../Metrics.js';
 import { useState, useEffect } from 'react';
 import InfoDisplay from './info/InfoDisplay.jsx';
-import { infoContent } from './info/infoContent.js';
+import { infoContent } from './info/InfoContent.js';
 
 /**
  * Connects component displays metric correlations with selectable lag
