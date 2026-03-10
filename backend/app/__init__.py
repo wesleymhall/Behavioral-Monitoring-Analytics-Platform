@@ -3,6 +3,7 @@ from flask_bcrypt import Bcrypt
 from flask_cors import CORS
 from flask_session import Session
 from flask_sqlalchemy import SQLAlchemy
+import os
 
 # extensions
 bcrypt = Bcrypt()
@@ -18,11 +19,13 @@ def create_app():
 
     # initialize extensions
     bcrypt.init_app(app)
-    # TODO: change CORS in production to restrict domain access
-    cors.init_app(app, supports_credentials=True)
     session.init_app(app)
     db.init_app(app)
-    
+
+    # CORS: restrict to frontend domain, support credentials (cookies/sessions)
+    frontend_url = os.environ.get('FRONTEND_URL', 'http://localhost:5173')  # default dev Vite URL
+    cors.init_app(app, origins=[frontend_url], supports_credentials=True)
+
     # register blueprints from routes/__init__.py
     from .routes import auth_bp, dash_bp, log_bp
     app.register_blueprint(auth_bp, url_prefix='/auth')
