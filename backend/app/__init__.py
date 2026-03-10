@@ -25,6 +25,10 @@ def create_app():
     # CORS: restrict to frontend domain, support credentials (cookies/sessions)
     frontend_url = os.environ.get('FRONTEND_URL', 'http://localhost:5173')  # default dev Vite URL
     cors.init_app(app, origins=[frontend_url], supports_credentials=True)
+    app.config.update(
+        SESSION_COOKIE_SAMESITE="None",
+        SESSION_COOKIE_SECURE=True
+    )
 
     # register blueprints from routes/__init__.py
     from .routes import auth_bp, dash_bp, log_bp
