@@ -23,7 +23,7 @@ def create_app():
     db.init_app(app)
 
     # CORS: restrict to frontend domain, support credentials (cookies/sessions)
-    frontend_url = os.environ.get('FRONTEND_URL', 'http://localhost:5173')  # default dev Vite URL
+    frontend_url = os.environ.get('FRONTEND_URL', 'http://127.0.0.1:5173')  # default dev Vite URL
     cors.init_app(app, origins=[frontend_url], supports_credentials=True)
     app.config.update(
         SESSION_COOKIE_SAMESITE="None",

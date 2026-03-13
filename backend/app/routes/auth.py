@@ -14,11 +14,11 @@ def register():
     password = data['password']
     # validate input
     if not username or not password:
-        return jsonify({'error': 'username and password are required'}), 400
+        return jsonify({'error': 'username and password are required (￣□￣;)!!'}), 400
     # check if user already exists
     user = User.query.filter_by(username=username).first()
     if user:
-        return jsonify({'error': 'user already exists'}), 400
+        return jsonify({'error': 'user already exists (￣□￣;)!!'}), 400
     # hash the password
     hashed_password = hash_password(password)
     # insert user into database
@@ -35,12 +35,12 @@ def login():
     password = data['password']
     # validate input
     if not username or not password:
-        return jsonify({'error': 'username and password are required'}), 400
+        return jsonify({'error': 'username and password are required (￣□￣;)!!'}), 400
     # check if user exists and verify password
     # use first to get a single user object
     user = User.query.filter_by(username=username).first()
     if not user or not verify_password(user.password_hash, password):
-        return jsonify({'error': 'invalid username or password'}), 400
+        return jsonify({'error': 'invalid username or password (￣□￣;)!!'}), 400
     # update streak
     update_streak(user)
     db.session.commit()

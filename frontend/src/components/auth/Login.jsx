@@ -12,6 +12,7 @@ function Login({ onLogin }) {
             onLogin();
         } catch (error) {
             console.error('login error:', error);
+            alert(error.response.data.error);
         }
     };
 

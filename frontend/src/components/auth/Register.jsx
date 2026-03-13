@@ -12,6 +12,7 @@ function Register({ toggleRegister }) {
             toggleRegister();
         } catch (error) {
             console.error('register error:', error);
+            alert(error.response.data.error);
         }
     };
 
