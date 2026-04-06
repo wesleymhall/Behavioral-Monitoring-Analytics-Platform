@@ -6,7 +6,6 @@ from keras.layers import LSTM, Dense
 from keras.utils import to_categorical
 from .utils import get_metric_dataframe, get_pivoted_metrics
 
-# FIX FOR DATA WITH NOT ENOUGH UNIQUE VALUES
 def get_clusters(user_id):
     df = get_metric_dataframe(user_id)
     pivoted = get_pivoted_metrics(df)

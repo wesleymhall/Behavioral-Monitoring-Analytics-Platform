@@ -6,7 +6,7 @@ import { infoContent } from './info/InfoContent.js';
 /**
  * Connects component displays metric correlations with selectable lag
  */
-function Connects({ analytics }) {
+function Connects({ analytics, metrics }) {
     const [lag, setLag] = useState('0');
     const [connectsData, setConnectsData] = useState({});
     const [isExpanded, setIsExpanded] = useState(false);
@@ -43,27 +43,33 @@ function Connects({ analytics }) {
                     {Object.keys(connectsData).length > 0 &&
                         Object.values(connectsData)[0] &&
                         Object.values(Object.values(connectsData)[0]).length > 0 && (
-                            <div className='table'>
-                                <div className='horizontal-flex'>
-                                    <div className='table-label'></div>
-                                    {Object.values(metricConfig).map(metric => (
-                                        <div className='table-value' key={metric.name}>{metric.emoji}</div>
-                                    ))}
-                                </div>
-                                {Object.values(metricConfig).map(metric => (
-                                    <div className='horizontal-left' key={metric.name}>
-                                        <div className='table-label'>{metric.emoji}: {metric.name}</div>
-                                        {Object.values(metricConfig).map(corrMetric => {
-                                            const corr = connectsData?.[metric.name]?.[Number(lag)]?.[corrMetric.name];
-                                            return (
-                                                <div className='table-value' key={corrMetric.name}>
-                                                    {corr != null ? Math.round(corr * 10) / 10 : '-'}
-                                                </div>
-                                            );
-                                        })}
-                                    </div>
-                                ))}
+                        <div className='table'>
+                        {/* header row */}
+                        <div className='horizontal-flex'>
+                            <div className='table-label'></div>
+                            {metrics.map(metricKey => (
+                            <div className='table-value' key={metricKey}>
+                                {metricConfig[metricKey]?.emoji || metricKey}
                             </div>
+                            ))}
+                        </div>
+                        {/* rows */}
+                        {metrics.map(metricKey => (
+                            <div className='horizontal-left' key={metricKey}>
+                            <div className='table-label'>
+                                {metricConfig[metricKey]?.emoji || metricKey}: {metricConfig[metricKey]?.name || metricKey}
+                            </div>
+                            {metrics.map(corrMetric => {
+                                const corr = connectsData?.[metricKey]?.[Number(lag)]?.[corrMetric];
+                                return (
+                                <div className='table-value' key={corrMetric}>
+                                    {corr != null ? Math.round(corr * 10) / 10 : '-'}
+                                </div>
+                                );
+                            })}
+                            </div>
+                        ))}
+                        </div>
                         )}
                 </>
             )}

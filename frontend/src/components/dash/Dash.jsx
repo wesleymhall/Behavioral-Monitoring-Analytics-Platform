@@ -148,13 +148,13 @@ function Dash() {
                                     <Stats analytics={analytics} metrics={metrics}/>
                                 </div>
                                 <div className='component-container stretch-container'>
-                                    <Connects analytics={analytics}/>
+                                    <Connects analytics={analytics} metrics={metrics}/>
                                 </div>
                                 <div className='component-container stretch-container'>
-                                    <Patterns analytics={analytics} logsLength={logsLength}/>
+                                    <Patterns analytics={analytics} logsLength={logsLength} metrics={metrics}/>
                                 </div>
                                 <div className='component-container stretch-container'>
-                                    <Predict analytics={analytics} logsLength={logsLength}/>
+                                    <Predict analytics={analytics} logsLength={logsLength} metrics={metrics}/>
                                 </div>
                             </div>
                         ) : (

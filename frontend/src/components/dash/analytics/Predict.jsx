@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 /**
  * Predict component shows prediction cluster and confidence for metrics
  */
-function Predict({ analytics, logsLength }) {
+function Predict({ analytics, logsLength, metrics }) {
     const [prediction, setPrediction] = useState({});
     const [confidence, setConfidence] = useState(0);
     const [isExpanded, setIsExpanded] = useState(false);
@@ -41,9 +41,9 @@ function Predict({ analytics, logsLength }) {
                 ) : Object.keys(prediction).length > 0 && (
                     <div className='vertical-flex'>
                         <div className='horizontal-flex'>
-                            {Object.values(metricConfig).map(metric => (
-                                <div className='table-label' key={metric.name}>
-                                    {metric.emoji}: {prediction[metric.name] ?? '-'}
+                            {metrics.map(metricKey => (
+                                <div className='table-label' key={metricKey}>
+                                    {metricConfig[metricKey]?.emoji || metricKey}: {prediction[metricKey] ?? '-'}
                                 </div>
                             ))}
                             <div className='table-label'>confidence: {confidence}%</div>

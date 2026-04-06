@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 /**
  * Patterns component displays clusters of metric patterns from analytics
  */
-function Patterns({ analytics, logsLength }) {
+function Patterns({ analytics, logsLength, metrics }) {
     const [clusters, setClusters] = useState([]);
     const [isExpanded, setIsExpanded] = useState(false);
 
@@ -42,9 +42,9 @@ function Patterns({ analytics, logsLength }) {
                         {clusters.map((cluster, idx) => (
                             <div className='horizontal-flex' key={idx}>
                                 <div className='table-label'>{idx + 1}</div>
-                                {Object.values(metricConfig).map(metric => (
-                                    <div className='table-label' key={metric.name}>
-                                        {metric.emoji}: {cluster[metric.name] ?? '-'}
+                                {metrics.map(metricKey => (
+                                    <div className='table-label' key={metricKey}>
+                                        {metricConfig[metricKey]?.emoji || metricKey}: {cluster[metricKey] ?? '-'}
                                     </div>
                                 ))}
                                 <div className='table-label'>%: {cluster['%']}</div>
