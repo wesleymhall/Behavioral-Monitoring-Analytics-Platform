@@ -186,7 +186,7 @@ const metricConfig = {
         array: dietArr,
     },
     'screen' : {
-        name: 'screen',
+        name: 'screentime',
         prompt: 'how much u look at a screen?',
         emoji: '📺',
         array: screentimeArr,
@@ -222,7 +222,7 @@ const metricConfig = {
         array: creativityArr,
     },
     'outdoors' : {
-        name: 'outdoors',
+        name: 'outdoortime',
         prompt: 'how much were u outdoors?',
         emoji: '🌳',
         array: outdoorsArr,
