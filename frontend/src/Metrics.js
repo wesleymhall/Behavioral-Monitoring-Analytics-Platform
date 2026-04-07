@@ -11,6 +11,32 @@ const feelingArr = [
     { idx: 10, emote: '(ﾉ◕ヮ◕)ﾉ･✧' },
 ];
 
+const sleepArr = [
+    { idx: 1, emote: '(￣□￣;)!!' },
+    { idx: 2, emote: '(◎_◎;)' },
+    { idx: 3, emote: '(=_=)' },
+    { idx: 4, emote: '(-_-)' },
+    { idx: 5, emote: '( -.-)Z' },
+    { idx: 6, emote: '( -_-)Zz' },
+    { idx: 7, emote: '( ~.~)Zzz' },
+    { idx: 8, emote: '( -‿-)💤' },
+    { idx: 9, emote: '(๑˘︶˘๑)✧🌙' },
+    { idx: 10, emote: '( ˘ ³˘)♡💤' },
+];
+
+const hygieneArr = [
+    { idx: 1, emote: '(×_×;)' },
+    { idx: 2, emote: '(;¬_¬)' },
+    { idx: 3, emote: '(¬_¬")' },
+    { idx: 4, emote: '(・_・)' },
+    { idx: 5, emote: '(＾_＾)' },
+    { idx: 6, emote: '(｡•ᴗ•｡)' },
+    { idx: 7, emote: '(＾▽＾)🧴' },
+    { idx: 8, emote: '(｡•̀ᴗ-)✧🛁' },
+    { idx: 9, emote: '(๑˃ᴗ˂)ﻭ ✨' },
+    { idx: 10, emote: '(˘ᵕ˘)🌿✨' },
+];
+
 const exerciseArr = [
     { idx: 1, emote: '(￣□￣;)' },
     { idx: 2, emote: '(・_・;)' },
