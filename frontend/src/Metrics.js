@@ -181,7 +181,7 @@ const learningArr = [
 ];
 
 const spendingArr = [
-    { idx: 1, emote: '(＾_＾)…💰' }
+    { idx: 1, emote: '(＾_＾)…💰' },
     { idx: 2, emote: '(｡•ᴗ•｡)…💼' },
     { idx: 3, emote: '(￣-￣)…💰' },
     { idx: 4, emote: '(・_・)…💵' },
