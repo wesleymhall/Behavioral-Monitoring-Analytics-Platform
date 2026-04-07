@@ -141,7 +141,7 @@ const creativityArr = [
     { idx: 10, emote: '(｡♥‿♥｡)…🚀' },
 ];
 
-const outdoorsArr = [
+const outdoortimeArr = [
     { idx: 1, emote: '(・_・;)' },
     { idx: 2, emote: '(¬_¬")' },
     { idx: 3, emote: '(￣-￣)…🚶‍♂️' },
@@ -224,7 +224,7 @@ const metricConfig = {
         emoji: '🍎',
         array: dietArr,
     },
-    'screen' : {
+    'screentime' : {
         name: 'screentime',
         prompt: 'how much u look at a screen?',
         emoji: '📺',
@@ -260,11 +260,11 @@ const metricConfig = {
         emoji: '💡',
         array: creativityArr,
     },
-    'outdoors' : {
+    'outdoortime' : {
         name: 'outdoortime',
         prompt: 'how much were u outdoors?',
         emoji: '🌳',
-        array: outdoorsArr,
+        array: outdoortimeArr,
     },
     'focus': {
     name: 'focus',
