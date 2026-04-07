@@ -18,7 +18,7 @@ function SelectMetrics() {
     const toggleMetric = (name) => {
       setSelectedMetrics(prev => {
         if (prev.includes(name)) return prev.filter(m => m !== name);
-        if (prev.length >= 5) return prev;
+        if (prev.length >= 8) return prev;
         return [...prev, name];
       });
     };
@@ -64,7 +64,7 @@ function SelectMetrics() {
                             <div className='component-container' type='selectedbox'>
                                 <div className='vertical-flex' type='centered'>
                                     <div className='horizontal-flex'>
-                                        {[0, 1, 2, 3, 4].map(i => (
+                                        {[0, 1, 2, 3, 4, 5, 6, 7].map(i => (
                                             <div key={i} className='component-container' type='selectedmetric'>
                                                 {selectedMetrics[i] && (
                                                     <button onClick={() => toggleMetric(selectedMetrics[i])} type='plaintext'>
