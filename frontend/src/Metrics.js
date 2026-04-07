@@ -154,6 +154,45 @@ const outdoorsArr = [
     { idx: 10, emote: '(🔥)…🏕️' },
 ];
 
+const focusArr = [
+    { idx: 1, emote: '(×_×)…🌀' },
+    { idx: 2, emote: '(・_・;)…📱' },
+    { idx: 3, emote: '(¬_¬")…👀' },
+    { idx: 4, emote: '(￣-￣)…⌛' },
+    { idx: 5, emote: '(＾_＾)…📖' },
+    { idx: 6, emote: '(｡•ᴗ•｡)…🧠' },
+    { idx: 7, emote: '(＾▽＾)…🎯' },
+    { idx: 8, emote: '(๑>◡<๑)…🔥' },
+    { idx: 9, emote: '(★^O^★)…⚡' },
+    { idx: 10, emote: '(ಠ‿ಠ)…🧠⚡' },
+];
+
+const learningArr = [
+    { idx: 1, emote: '(×_×)…🚫' },
+    { idx: 2, emote: '(￣-￣)…😴' },
+    { idx: 3, emote: '(・_・)…👀' },
+    { idx: 4, emote: '(¬_¬")…🤔' },
+    { idx: 5, emote: '(＾_＾)…📝' },
+    { idx: 6, emote: '(｡•ᴗ•｡)…🧠' },
+    { idx: 7, emote: '(＾▽＾)…🧠✨' },
+    { idx: 8, emote: '(๑•̀ㅂ•́)و✧…⚡' },
+    { idx: 9, emote: '(★^O^★)…🎓' },
+    { idx: 10, emote: '(ಠ‿ಠ)…🚀' },
+];
+
+const spendingArr = [
+    { idx: 1, emote: '(＾_＾)…💰' }
+    { idx: 2, emote: '(｡•ᴗ•｡)…💼' },
+    { idx: 3, emote: '(￣-￣)…💰' },
+    { idx: 4, emote: '(・_・)…💵' },
+    { idx: 5, emote: '(¬_¬")…💸' },
+    { idx: 6, emote: '(・_・;)…💳' },
+    { idx: 7, emote: '(；´Д｀)…💸💸' },
+    { idx: 8, emote: '(ಠ_ಠ)…💳🔥' },
+    { idx: 9, emote: '(╬ಠ益ಠ)…💸💸💸' },
+    { idx: 10, emote: '(💀)…💸💸💸💸' },
+];
+
 const metricConfig = {
     'feeling' : {
         name: 'feeling',
@@ -226,6 +265,24 @@ const metricConfig = {
         prompt: 'how much were u outdoors?',
         emoji: '🌳',
         array: outdoorsArr,
+    },
+    'focus': {
+    name: 'focus',
+    prompt: 'how focused were u?',
+    emoji: '🎯',
+    array: focusArr,
+    },
+    'learning': {
+        name: 'learning',
+        prompt: 'did u learn anything?',
+        emoji: '📚',
+        array: learningArr,
+    },
+    'spending': {
+        name: 'spending',
+        prompt: 'how much cash u blow?',
+        emoji: '💸',
+        array: spendingArr,
     },
 }
 
