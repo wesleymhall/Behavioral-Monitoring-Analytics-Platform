@@ -16,9 +16,11 @@ function SelectMetrics() {
     }, [selectedMetrics]);
 
     const toggleMetric = (name) => {
-        setSelectedMetrics(prev =>
-            prev.includes(name) ? prev.filter(m => m !== name) : [...prev, name]
-        );
+      setSelectedMetrics(prev => {
+        if (prev.includes(name)) return prev.filter(m => m !== name);
+        if (prev.length >= 5) return prev;
+        return [...prev, name];
+      });
     };
 
     const handleSubmit = async () => {
