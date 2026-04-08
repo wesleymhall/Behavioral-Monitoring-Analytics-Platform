@@ -40,7 +40,7 @@ function Stats({ analytics, metrics }) {
                 <>
                     {/* mode / span selector and info element */}
                     <div className='horizontal-space-between'>
-                        {*/<InfoDisplay content={infoContent.stats}/>*/}
+                        {/*<InfoDisplay content={infoContent.stats}/>*/}
                         <div className='horizontal-right'>
                             <div>
                                 <select value={mode} onChange={e => setMode(e.target.value)}>
