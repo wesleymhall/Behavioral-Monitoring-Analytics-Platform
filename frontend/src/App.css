@@ -465,30 +465,18 @@ ul {
 }
 
 /* ===================== MOBILE OVERLAY ===================== */
-html, body {
-  margin: 0;
-  overflow-x: hidden;
+#mobile-block {
+  display: none;
 }
 
 @media (max-width: 768px) {
   #mobile-block {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100vh;
-
-    box-sizing: border-box;
-
     display: flex;
-    justify-content: center;
-    align-items: center;
-
+    position: fixed;
+    position: fixed;
+    inset: 0;
     background: #DCE5DD;
+    align-items: center;
+    justify-content: center;
     z-index: 9999;
-
-    text-align: center;
-    font-size: 1.5rem;
-    padding: 20px;
-  }
 }
