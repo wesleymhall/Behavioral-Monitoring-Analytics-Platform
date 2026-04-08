@@ -219,7 +219,7 @@ const metricConfig = {
         array: exerciseArr,
     },
     'diet' : {
-        name: 'hygiene',
+        name: 'diet',
         prompt: 'how healthy did u eat?',
         emoji: '🍎',
         array: dietArr,
