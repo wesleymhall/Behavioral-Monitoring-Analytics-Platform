@@ -28,7 +28,7 @@ function Connects({ analytics, metrics }) {
                 <>
                     {/* lag selector and info element */}          
                     <div className='horizontal-space-between'>
-                        <InfoDisplay content={infoContent.connects}/>
+                        {/*<InfoDisplay content={infoContent.connects}/>*/}
                         <div className='horizontal-right'>
                             <div>
                                 <label>lag: </label>
