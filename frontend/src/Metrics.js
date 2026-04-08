@@ -267,10 +267,10 @@ const metricConfig = {
         array: outdoortimeArr,
     },
     'focus': {
-    name: 'focus',
-    prompt: 'how focused were u?',
-    emoji: '🎯',
-    array: focusArr,
+        name: 'focus',
+        prompt: 'how focused were u?',
+        emoji: '🎯',
+        array: focusArr,
     },
     'learning': {
         name: 'learning',
