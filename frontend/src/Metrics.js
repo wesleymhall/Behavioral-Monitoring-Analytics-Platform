@@ -103,8 +103,8 @@ const relationshipsArr = [
 ];
 
 const alcoholArr = [
-    { idx: 1, emote: '(★^O^★)🚫🍺' },
-    { idx: 2, emote: '(＾▽＾)🥤' },
+    { idx: 1, emote: '(★^O^★)🚫' },
+    { idx: 2, emote: '(＾▽＾)' },
     { idx: 3, emote: '(｡•ᴗ•｡)🍺' },
     { idx: 4, emote: '(￣▽￣)🍷' },
     { idx: 5, emote: '(¬_¬")🥂' },
@@ -226,7 +226,7 @@ const metricConfig = {
     },
     'screentime' : {
         name: 'screentime',
-        prompt: 'how much u look at a screen?',
+        prompt: 'how much did u look at a screen?',
         emoji: '📺',
         array: screentimeArr,
     },
@@ -244,7 +244,7 @@ const metricConfig = {
     },
     'alcohol' : {
         name: 'alcohol',
-        prompt: 'how much booze?',
+        prompt: 'how much did u drink?',
         emoji: '🍺',
         array: alcoholArr,
     },
@@ -280,7 +280,7 @@ const metricConfig = {
     },
     'spending': {
         name: 'spending',
-        prompt: 'how much cash u blow?',
+        prompt: 'how much did u spend?',
         emoji: '💸',
         array: spendingArr,
     },
