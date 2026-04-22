@@ -18,7 +18,7 @@ export default function GlobalLoader() {
     <div ref={overlayRef} className='global-loader'>
       <div className='load-display'></div>
       <div className='sleep-message'>
-        server is waking up, this may take ~20 seconds
+        server fell asleep, this may take ~20 seconds
       </div>
     </div>
   );
