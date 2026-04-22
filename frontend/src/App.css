@@ -464,6 +464,14 @@ ul {
   100% { content: '( -.-) 💤'; }
 }
 
+.sleep-message {
+  display: none;
+  text-align: center;
+}
+.global-loader.asleep .sleep-message {
+  display: block;
+}
+
 /* ===================== MOBILE OVERLAY ===================== */
 #mobile-block {
   display: none;
