@@ -435,6 +435,7 @@ ul {
 /* ===================== LOADER / SPINNER ===================== */
 .global-loader {
   display: none;
+  flex-direction: column;
   position: fixed;
   inset: 0;
   background: #DCE5DD;
@@ -466,6 +467,7 @@ ul {
 
 .sleep-message {
   display: none;
+  margin-top: 20px;
   text-align: center;
 }
 .global-loader.asleep .sleep-message {
