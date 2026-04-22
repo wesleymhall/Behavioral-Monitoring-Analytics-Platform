@@ -29,7 +29,6 @@ export const startLoading = () => {
   if (loadingCount === 1) {
     sleepTimer = setTimeout(() => {
       if (loadingCount > 0 && overlayRef) {
-        console.log("sleep timer fired");
         overlayRef.classList.add('asleep'); 
         // alert user that server may need to boot up
       }
