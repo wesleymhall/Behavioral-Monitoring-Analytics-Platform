@@ -45,6 +45,8 @@ def get_clusters(user_id):
     centers_df['%'] = np.round(counts / len(pivoted) * 100)
     # get prediction
     prediction = predict_next_cluster(labels, centers_df, n_clusters)
+    # sort df by %
+    centers_df = centers_df.sort_values('%', ascending=False).reset_index(drop=True)
     # orient records so each row is dict, not column
     return {
         "clusters": centers_df.to_dict(orient='records'),
