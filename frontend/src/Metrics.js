@@ -202,19 +202,19 @@ const metricConfig = {
     },
     'sleep' : {
         name: 'sleep',
-        prompt: 'how was ur sleep?',
+        prompt: 'how well did u sleep last night?',
         emoji: '💤',
         array: sleepArr,
     },
     'hygiene' : {
         name: 'hygiene',
-        prompt: 'how is ur hygiene?',
+        prompt: 'how well did u take care of yourself?',
         emoji: '🛀',
         array: hygieneArr,
     },
     'exercise' : {
         name: 'exercise',
-        prompt: 'how was ur exercise?',
+        prompt: 'how active were u?',
         emoji: '💪',
         array: exerciseArr,
     },
@@ -226,7 +226,7 @@ const metricConfig = {
     },
     'screentime' : {
         name: 'screentime',
-        prompt: 'how much did u look at a screen?',
+        prompt: 'how much screen time did u have?',
         emoji: '📺',
         array: screentimeArr,
     },
@@ -238,7 +238,7 @@ const metricConfig = {
     },
     'relationships' : {
         name: 'relationships',
-        prompt: 'how were ur interactions with others?',
+        prompt: 'how were ur interactions?',
         emoji: '💖',
         array: relationshipsArr,
     },
@@ -250,7 +250,7 @@ const metricConfig = {
     },
     'vices' : {
         name: 'vices',
-        prompt: 'how much u indulge?',
+        prompt: 'how much did u indulge?',
         emoji: '😈',
         array: vicesArr,
     },
@@ -262,7 +262,7 @@ const metricConfig = {
     },
     'outdoortime' : {
         name: 'outdoortime',
-        prompt: 'how much were u outdoors?',
+        prompt: 'how much time did u spend outdoors?',
         emoji: '🌳',
         array: outdoortimeArr,
     },
@@ -274,13 +274,13 @@ const metricConfig = {
     },
     'learning': {
         name: 'learning',
-        prompt: 'did u learn anything?',
+        prompt: 'how much did u learn?',
         emoji: '📚',
         array: learningArr,
     },
     'spending': {
         name: 'spending',
-        prompt: 'how much did u spend?',
+        prompt: 'how much money did u spend?',
         emoji: '💸',
         array: spendingArr,
     },
