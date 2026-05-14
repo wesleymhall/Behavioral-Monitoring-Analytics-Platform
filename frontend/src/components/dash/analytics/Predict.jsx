@@ -46,8 +46,8 @@ function Predict({ analytics, logsLength, metrics }) {
                                     {metricConfig[metricKey]?.emoji || metricKey}: {prediction[metricKey] ?? '-'}
                                 </div>
                             ))}
+                            <div className='table-label'>conf: {confidence}%</div>
                         </div>
-                        <div className='table-value'>confidence: {confidence}%</div>
                     </div>
                 )
             )}
