@@ -18,7 +18,7 @@ export default function GlobalLoader() {
     <div ref={overlayRef} className='global-loader'>
       <div className='load-display'></div>
       <div className='sleep-message'>
-        i run this server on a free tier service that turns off when inactive, this may take ~2 minute
+        i run this server on a free tier service that shuts off when inactive, may take ~2 minute to boot up
       </div>
     </div>
   );
