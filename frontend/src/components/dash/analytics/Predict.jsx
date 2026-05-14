@@ -47,7 +47,7 @@ function Predict({ analytics, logsLength, metrics }) {
                                 </div>
                             ))}
                         </div>
-                        <div className='table-label'>confidence: {confidence}%</div>
+                        <div className='horizontal-left'>confidence: {confidence}%</div>
                     </div>
                 )
             )}
