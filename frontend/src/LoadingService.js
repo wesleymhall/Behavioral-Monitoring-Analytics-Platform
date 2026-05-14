@@ -32,7 +32,7 @@ export const startLoading = () => {
         overlayRef.classList.add('asleep'); 
         // alert user that server may need to boot up
       }
-    }, 5000); // if loading more than 5 seconds
+    }, 20000); // if loading more than 20 seconds
   }
 };
 
